@@ -49,7 +49,19 @@ The system follows a structured workflow consisting of the following key process
    In the implementation of abstraction, we utilized the abstraction by using it to categorize the different fields. starting with the abstract class CareerField, this sets up the format of the rest of the 
    subclasses with field(), recommendationCourse(), jobOpportunities(), and otherInfo() as its abstract methods. Each field subclass then has their information placed into these methods, 
    by having them inherit CareerField. A career field is then selected using the switch statement to display its information for the user when it makes its recommendation.
-
+   - Abstract Class Implementation
+     ```bash
+      abstract class CareerField{
+       public abstract String field();
+      }
+   - Subclass Implemented Example
+     ```bash
+      class LawField extends CareerField{
+          public String field(){
+              return "Recommend Law and Legal Services!\n" +
+              "Includes lawyers, judges, paralegals, and legal consultants.\n";
+          } 
+      }
 ---
 
 ## 📊 DATASET
