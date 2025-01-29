@@ -62,35 +62,35 @@ The system follows a structured workflow consisting of the following key process
    - Subclass Implemented Example
      ```bash
       class LawField extends CareerField{
-    public String field(){
-        return "Recommend Law and Legal Services!\n" +
-        "Includes lawyers, judges, paralegals, and legal consultants.\n";
-    }
-    public String recommendationCourse(){
-        return "Bachelor of Laws (LLB)\n" +
-        "Bachelor of Arts in Political Science (AB PolSci)\n" +
-        "Bachelor of Arts in Legal Management (LM)\n" +
-        "Bachelor of Public Administration (BPA)\n" +
-        "Bachelor of Science in Criminology (BS Crim)\n" +
-        "Bachelor of Arts in Philosophy (AB Philosophy)\n";
-    }
-    public String jobOpportunities(){
-        return "Legal Officer\n" +
-        "Corporate Lawyer\n" +
-        "Litigation Lawyer\n" +
-        "Paralegal\n" +
-        "Immigration Lawyer\n" +
-        "HR Legal Consultant\n" +
-        "Tax Lawyer\n" +
-        "Law Professor\n" +
-        "Public Attorney\n" +
-        "Prosecutor\n";
-
-    }
-    public String otherInfo(){
-        return "Monthly salary of Law and Legal Services averaging 48,000 PHP ";
-    }
-    }
+       public String field(){
+           return "Recommend Law and Legal Services!\n" +
+           "Includes lawyers, judges, paralegals, and legal consultants.\n";
+       }
+       public String recommendationCourse(){
+           return "Bachelor of Laws (LLB)\n" +
+           "Bachelor of Arts in Political Science (AB PolSci)\n" +
+           "Bachelor of Arts in Legal Management (LM)\n" +
+           "Bachelor of Public Administration (BPA)\n" +
+           "Bachelor of Science in Criminology (BS Crim)\n" +
+           "Bachelor of Arts in Philosophy (AB Philosophy)\n";
+       }
+       public String jobOpportunities(){
+           return "Legal Officer\n" +
+           "Corporate Lawyer\n" +
+           "Litigation Lawyer\n" +
+           "Paralegal\n" +
+           "Immigration Lawyer\n" +
+           "HR Legal Consultant\n" +
+           "Tax Lawyer\n" +
+           "Law Professor\n" +
+           "Public Attorney\n" +
+           "Prosecutor\n";
+   
+       }
+       public String otherInfo(){
+           return "Monthly salary of Law and Legal Services averaging 48,000 PHP ";
+       }
+       }
 ---
 
 ## 📊 DATASET
