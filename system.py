@@ -11,23 +11,26 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
 pd.set_option('display.max_colwidth', None)
 
+#Retrieving dataset for training of the model
 def get_data():
     train_df = pd.read_csv("C:/Users/ghelo/Downloads/train_dataset.csv")
     return train_df
-
+    
 def data_clean_engineering(train_data, encoder=None, fit_encoder=False):
 
     column_to_move = "Target_Field"
     target_col = train_data.pop(column_to_move)
     train_data[column_to_move] = target_col
     
+     #Feature Engineering: Creating a new feature based on Tech_Savvy_Score, Creativity_Score, Study_Hours, Age
     train_data['Field_Fit_Score'] = (
         0.4 * train_data['Tech_Savvy_Score'] +
         0.3 * train_data['Creativity_Score'] +
         0.2 * train_data['Study_Hours'] +
         0.1 * (train_data['Age'] / max(train_data['Age']))
         )
-
+    
+    #Feature Engineering: Creating a score tab based on what primary skill they have.
     train_data['Primary_Skill_Score'] = train_data['Primary_Skill'].replace({'Adaptability' : 5, 
                                                              'Technical Skills' : 10, 
                                                              'Creativity' : 8, 
@@ -36,25 +39,26 @@ def data_clean_engineering(train_data, encoder=None, fit_encoder=False):
                                                              'Communication' : 6, 
                                                              'Problem-Solving' : 10, 
                                                              "Critical Thinking" : 10})
-    
+    #Feature Engineering: Creating a new feature based on Tech_Savvy_Score and Primary_Skill_Score
     train_data['Skill_Utilization'] = 0.5 * train_data['Tech_Savvy_Score'] + 0.5 * train_data['Primary_Skill_Score']
+    #Feature Engineering: Creating a new feature based ont Tech_Savvy_Score, Creativity_Score, and Study_Hours
     train_data['Academic_Readiness'] = train_data['Tech_Savvy_Score'] + train_data['Creativity_Score'] + train_data['Study_Hours'] / 3
-
+    #Data Engineering: Replacing categorical values by numerical values
     train_data['Family_Income_Bracket'].replace({"High": 3, "Middle": 2, "Low": 1}, inplace=True)
     train_data['Scholarship_Status'] = train_data['Scholarship_Status'].apply(lambda x: 1 if x == "Yes" else 0)
     train_data['Cultural_Influence'].replace({"Society": 3, "Personal Interest": 2, "Family": 1}, inplace=True)
-
+    #Feature Engineering: Getting the SocioEconomic Score base on Family_Income_Bracket, Scholarship_Status, Cultural_Influence
     train_data['SocioEconmic'] = 3 / ((1/train_data['Family_Income_Bracket']) + (1/train_data['Scholarship_Status']) + (1/train_data['Cultural_Influence']))
-
+    #Feature Engineering: alignment of feature to target
     train_data['Strand_Target_Matching'] = train_data.apply(check_alignment, axis=1)
-
+    #Data Cleaning: dropping unnecessary feauters
     train_data.drop(['Primary_Skill', 'Hobby'], axis=1, inplace=True)
-
+    #Data Engineering: converting categorical values into numerical/nominal (0,1,2...n)
     selected_col = train_data[['MBTI','Extracurricular', 'Target_Field']]
     for col in selected_col.columns:
         track_mapping = {track: idx for idx, track in enumerate(train_data[col].unique())}
         train_data[col] = train_data[col].map(track_mapping)
-    
+    #Data Engineering: converting categorical features into numerical type
     cols_encode = ['Strand', 'Personality_Type', 'Future_Field_Security', 'Work_Flexibility']
     if fit_encoder:
         encoder = OneHotEncoder(sparse_output=False, drop=None)
@@ -65,7 +69,7 @@ def data_clean_engineering(train_data, encoder=None, fit_encoder=False):
         with open("C:/Users/ghelo/Downloads/encoder.pkl", "rb") as ef:
             encoder = pickle.load(ef)
         encoded = encoder.transform(train_data[cols_encode])
-
+    #Data engineering: converting categorical feature into nominal values.
     encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out())
     train_data = pd.concat([train_data, encoded_df], axis=1)  
     train_data.drop(columns=cols_encode, inplace=True)
@@ -78,7 +82,8 @@ def data_clean_engineering(train_data, encoder=None, fit_encoder=False):
     train_data = cat_correlation(train_data, cat_columns)
 
     return train_data
-
+    
+# Feature Engineering: checking the alignment of strand to the course/field.
 def check_alignment(row):
 
     strand = row['Strand']
@@ -98,6 +103,7 @@ def check_alignment(row):
         
     return 1 if target_field in strand_target_mapping.get(strand, []) else 0
 
+# Feature Engineering: Composition Correlation of 'Family_Income_Bracket', 'Cultural_Influence', 'Scholarship_Status'
 def cat_correlation(df, cat_columns):
 
     correlation_values = []
@@ -128,6 +134,7 @@ def create_model(train_data):
 
     return model, scaler
 
+#Saving the model used and scaler using pkl
 def save_model(model, scaler, model_file="C:/Users/ghelo/Downloads/model.pkl", scaler_file="C:/Users/ghelo/Downloads/scaler.pkl"):
     """Save the trained model and scaler to disk."""
     with open(model_file, "wb") as mf:
@@ -135,6 +142,7 @@ def save_model(model, scaler, model_file="C:/Users/ghelo/Downloads/model.pkl", s
     with open(scaler_file, "wb") as sf:
         pickle.dump(scaler, sf)
 
+#Retrieving the model used and scaler using pkl
 def load_model(model_file="C:/Users/ghelo/Downloads/model.pkl", scaler_file="C:/Users/ghelo/Downloads/scaler.pkl"):
     if not os.path.exists(model_file):
         raise FileNotFoundError(f"Model file not found: {model_file}")
@@ -147,7 +155,7 @@ def load_model(model_file="C:/Users/ghelo/Downloads/model.pkl", scaler_file="C:/
         scaler = pickle.load(sf)
     return model, scaler
 
-
+#Generating prediction using the test_dataset
 def predict_test_dataset(input_file="C:/Users/ghelo/Downloads/test_dataset.csv", model_file="C:/Users/ghelo/Downloads/model.pkl", scaler_file="C:/Users/ghelo/Downloads/scaler.pkl", output_file="C:/Users/ghelo/Downloads/prediction.csv"):
     try:
         # Ensure the directory exists
