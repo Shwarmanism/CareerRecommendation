@@ -47,21 +47,50 @@ The system follows a structured workflow consisting of the following key process
 
 ## ⚙️ Usage (Abstract Implementation)
    In the implementation of abstraction, we utilized the abstraction by using it to categorize the different fields. starting with the abstract class CareerField, this sets up the format of the rest of the 
-   subclasses with field(), recommendationCourse(), jobOpportunities(), and otherInfo() as its abstract methods. Each field subclass then has their information placed into these methods, 
-   by having them inherit CareerField. A career field is then selected using the switch statement to display its information for the user when it makes its recommendation.
+   subclasses with field(), recommendationCourse(), jobOpportunities(), and otherInfo() as its abstract methods. 
    - Abstract Class Implementation
      ```bash
-      abstract class CareerField{
-       public abstract String field();
-      }
+            abstract class CareerField{
+          public abstract String field();
+          public abstract String recommendationCourse();
+          public abstract String jobOpportunities();
+          public abstract String otherInfo();
+        }
+     
+   Each field subclass then has their information placed into these methods by having them inherit CareerField. A career field 
+   is then selected using the switch statement to display its information for the user when it makes its recommendation.
    - Subclass Implemented Example
      ```bash
       class LawField extends CareerField{
-          public String field(){
-              return "Recommend Law and Legal Services!\n" +
-              "Includes lawyers, judges, paralegals, and legal consultants.\n";
-          } 
-      }
+    public String field(){
+        return "Recommend Law and Legal Services!\n" +
+        "Includes lawyers, judges, paralegals, and legal consultants.\n";
+    }
+    public String recommendationCourse(){
+        return "Bachelor of Laws (LLB)\n" +
+        "Bachelor of Arts in Political Science (AB PolSci)\n" +
+        "Bachelor of Arts in Legal Management (LM)\n" +
+        "Bachelor of Public Administration (BPA)\n" +
+        "Bachelor of Science in Criminology (BS Crim)\n" +
+        "Bachelor of Arts in Philosophy (AB Philosophy)\n";
+    }
+    public String jobOpportunities(){
+        return "Legal Officer\n" +
+        "Corporate Lawyer\n" +
+        "Litigation Lawyer\n" +
+        "Paralegal\n" +
+        "Immigration Lawyer\n" +
+        "HR Legal Consultant\n" +
+        "Tax Lawyer\n" +
+        "Law Professor\n" +
+        "Public Attorney\n" +
+        "Prosecutor\n";
+
+    }
+    public String otherInfo(){
+        return "Monthly salary of Law and Legal Services averaging 48,000 PHP ";
+    }
+    }
 ---
 
 ## 📊 DATASET
