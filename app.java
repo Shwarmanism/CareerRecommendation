@@ -96,6 +96,10 @@ public class CareerRecommendation extends Application {
             pane.getChildren().add(scrollPane); 
         });
 
+        exitButton.setOnAction(event -> {
+            Platform.exit(); 
+        });
+
         //main menu scene
         Scene scene = new Scene(pane, 1100, 700);
 
