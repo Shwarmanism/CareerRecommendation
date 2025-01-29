@@ -41,7 +41,7 @@ The system follows a structured workflow consisting of the following key process
 ---
 
 ## 🎨 GUI USAGE
-   IKAW NA DITO RALPH
+   The program features a user-friendly interface that guides users through the career recommendation process. Upon launching the application, users can initiate the system by clicking a button. They are then directed to a form where they must enter the required information using a series of text fields and dropdown boxes. Once the necessary data is submitted through a button, the system processes the input, and after a brief loading period, it displays the recommended career field based on the analysis.
   
 ---
 
