@@ -33,8 +33,7 @@ The system follows a structured workflow consisting of the following key process
    git clone https://github.com/shwarmanism/CareerRecommendation.git
    cd CareerRecommendation
 2. Install required dependencies
-   ```bash
-   pip install -r requirements.txt
+   - @requirments.txt
 3. Run the application
    ```bash
    java app.java
